@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Party Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1B2D;
+    --red: #E63946;
+    --white: #F1FAEE;
+    --blue: #457B9D;
+    --panel: #172a44;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--white);
+    font-family: 'Rubik', 'Arial Black', Arial, sans-serif; font-weight: 800; }
+  #app { max-width: 480px; margin: 0 auto; padding: 32px 20px 40px;
+    display: flex; flex-direction: column; gap: 18px; text-align: center; }
+  h1 { font-size: 40px; margin: 0; letter-spacing: 1px; text-transform: uppercase; }
+  h1 span { color: var(--red); }
+  p { margin: 0; font-size: 18px; color: var(--blue); }
+  .games { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .game { display: flex; align-items: center; gap: 16px; text-align: left; text-decoration: none;
+    color: var(--white); background: var(--panel); border: 3px solid var(--blue);
+    border-radius: 22px; padding: 18px; box-shadow: 0 6px 0 #2f566e; transition: transform .08s; }
+  .game:active { transform: translateY(4px); box-shadow: 0 2px 0 #2f566e; }
+  .game .icon { font-size: 48px; width: 64px; text-align: center; flex-shrink: 0; }
+  .game .name { font-size: 24px; text-transform: uppercase; }
+  .game .desc { font-size: 15px; color: var(--blue); margin-top: 4px; font-weight: 700; }
+  .game.live { border-color: var(--red); box-shadow: 0 6px 0 #9c1f2a; }
+  .game.live:active { box-shadow: 0 2px 0 #9c1f2a; }
+  .game.soon { opacity: .55; box-shadow: none; pointer-events: none; }
+  .badge { display: inline-block; margin-top: 6px; font-size: 12px; text-transform: uppercase;
+    background: var(--bg); border: 2px solid var(--blue); border-radius: 10px; padding: 3px 8px; color: var(--white); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =====================================================
+   EDIT HERE: all visible text (STR) and the game list (GAMES).
+   Replace the English placeholders with your own Mongolian.
+   To add a new game later: make its page (e.g. mafia.html),
+   then change its entry below to live: true and set href.
+   ===================================================== */
+const STR = {
+  title1: "Галзуу ", title2: "Талх",
+  subtitle: "Монгол хэлээр тоглоцгооё!",
+  soon: "Тун удахгүй"
+};
+
+const GAMES = [
+  { icon: "🕵️", name: "Импостер", desc: "Урвагчийг олцгооё", href: "impostor.html", live: true },
+  { icon: "🎭", name: "Цагдаа хулгайч", desc: "Хулгайчийг барьцгаая", href: "", live: false },
+  { icon: "❓", name: "Би хэн бэ?", desc: "Тийм эсвэл үгүй?", href: "", live: false }
+];
+/* ===================================================== */
+
+document.getElementById('app').innerHTML = `
+  <h1>${STR.title1}<span>${STR.title2}</span></h1>
+  <p>${STR.subtitle}</p>
+  <div class="games">
+    ${GAMES.map(g => g.live
+      ? `<a class="game live" href="${g.href}">
+           <div class="icon">${g.icon}</div>
+           <div><div class="name">${g.name}</div><div class="desc">${g.desc}</div></div>
+         </a>`
+      : `<div class="game soon">
+           <div class="icon">${g.icon}</div>
+           <div><div class="name">${g.name}</div><div class="desc">${g.desc}</div>
+           <span class="badge">${STR.soon}</span></div>
+         </div>`).join('')}
+  </div>
+`;
+</script>
+</body>
+</html>
